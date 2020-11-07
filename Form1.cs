@@ -358,6 +358,9 @@ namespace ContestPlacesWithoutPoints
         private static void getEstimateGroups(Result r, string[] lines)
         {
             var eg = lines[0].Trim().Split(new string[] { " ", "\t" }, StringSplitOptions.RemoveEmptyEntries);
+            if (eg.Length < 1)
+                throw new Exception("Неверно заполнена первая строка: первая строка - приоритеты груп при оценке. Номера групп начинаются с нуля, левая группа самая сильная. Первая строка вообще не заполнена");
+
             r.EstimateGroups = new int[eg.Length];
             for (int i = 0; i < eg.Length; i++)
             {
@@ -402,7 +405,7 @@ namespace ContestPlacesWithoutPoints
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            label1.Text = File.ReadAllText("help.txt");
+            label1.Text = File.ReadAllText("help.md");
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
