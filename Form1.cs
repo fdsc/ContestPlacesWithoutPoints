@@ -64,7 +64,7 @@ namespace ContestPlacesWithoutPoints
 
             public List<int> compared;
 
-            public TextClass(Result r, string Name, string estString)
+            public TextClass(Result r, string Name, string estString, bool isReversed)
             {
                 this.r    = r;
                 this.Name = Name;
@@ -74,6 +74,8 @@ namespace ContestPlacesWithoutPoints
                 for (int i = 0; i < r.EstimateGroups.Length; i++)
                 {
                     this.estimates[i] = Int32.Parse(est[r.EstimateGroups[i]]);
+                    if (isReversed)
+                        this.estimates[i] *= -1;
                 }
             }
 
@@ -104,6 +106,8 @@ namespace ContestPlacesWithoutPoints
                 return result;
             }
 
+            // Если объект лучше по большему количеству признаков - то объект побеждает другой объект
+            // Если возвращаемый результат меньше нуля - значит this хуже, чем other
             public int CompareTo(TextClass other)
             {
                 var cnt =  0;
@@ -123,6 +127,7 @@ namespace ContestPlacesWithoutPoints
                 if (cnt < 0)
                     return -1;
 
+                // Сравниваем по приоритетам групп
                 for (int i = 0; i < this.estimates.Length; i++)
                 {
                     if (this.estimates[i] < other.estimates[i])
@@ -169,8 +174,9 @@ namespace ContestPlacesWithoutPoints
 
             var lines = File.ReadAllLines(FileName, /*Encoding.GetEncoding(1251)*/Encoding.UTF8);
 
+            bool isReversed = ReverseBox.Checked;
             getEstimateGroups(r, lines);
-            addTexts(r, lines);
+            addTexts(r, lines, isReversed);
             calculate(r);
 
             return r;
@@ -197,6 +203,7 @@ namespace ContestPlacesWithoutPoints
 
                 for (int i = 0; i < txts.Count; i++)
                 {
+                    // Если соревнователь никому не уступает
                     if (txts[i].min == 0)
                     {
                         var txt = txts[i];
@@ -232,6 +239,8 @@ namespace ContestPlacesWithoutPoints
                     }
                 }
                 else*/
+                // Если все уступают хоть кому-нибудь, то есть первое место не очевидно
+                // Ищем всех, у кого максимальное количество соревнователей, над которыми они круче
                 if (cntI <= 0)
                 {
                     int maxSumm = int.MinValue;
@@ -259,6 +268,7 @@ namespace ContestPlacesWithoutPoints
                     }
                 }
 
+                // Из уже выделенных лучших снова создаём отдельный турнир и решаем уже там
                 if (list.Count > 1)
                 {
                     var newR = new Result();
@@ -329,7 +339,7 @@ namespace ContestPlacesWithoutPoints
             }
         }
 
-        private static void addTexts(Result r, string[] lines)
+        private static void addTexts(Result r, string[] lines, bool isReversed)
         {
             r.texts = new List<TextClass>(lines.Length >> 1);
             for (int i = 1; i < lines.Length; i++)
@@ -338,7 +348,8 @@ namespace ContestPlacesWithoutPoints
                 if (t.Length <= 0 || t.StartsWith("#"))
                     continue;
 
-                var txt = new TextClass(r, t, lines[i + 1].Trim());
+                
+                var txt = new TextClass(r, t, lines[i + 1].Trim(), isReversed);
                 r.texts.Add(txt);
                 i++;
             }
@@ -366,7 +377,7 @@ namespace ContestPlacesWithoutPoints
                 }
 
                 if (!fnd)
-                    throw new Exception("Неверно заполнена первая строка: первая строка - приоритеты груп при оценке. Номера групп начинаются с нуля, правая группа самая сильная.");
+                    throw new Exception("Неверно заполнена первая строка: первая строка - приоритеты груп при оценке. Номера групп начинаются с нуля, левая группа самая сильная.");
             }
         }
         
@@ -386,6 +397,11 @@ namespace ContestPlacesWithoutPoints
         private void Form1_Load(object sender, EventArgs e)
         {
             label1.Text = File.ReadAllText("help.txt");
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
