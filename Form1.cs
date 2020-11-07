@@ -385,6 +385,12 @@ namespace ContestPlacesWithoutPoints
         {
             var sb = new StringBuilder();
             
+            bool isReversed = ReverseBox.Checked;
+            if (isReversed)
+                sb.AppendLine("Принцип подсчёта: чем больше параметр - тем лучше");
+            else
+                sb.AppendLine("Принцип подсчёта: чем меньше параметр (чем выше место) - тем лучше");
+
             r.texts.Sort(r.texts[0]);
             for (int i = 0; i < r.texts.Count; i++)
             {
