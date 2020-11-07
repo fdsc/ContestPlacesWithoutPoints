@@ -1,5 +1,6 @@
 # ContestPlacesWithoutPoints
 Подсчёт мест в конкурсе (соревнованиях) без введения очковой системы
+Контакты см. https://consp11.github.io/data/about.html
 
 Справка - см. help.md
 
