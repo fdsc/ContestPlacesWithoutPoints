@@ -68,10 +68,20 @@ namespace ContestPlacesWithoutPoints
             {
                 this.r    = r;
                 this.Name = Name;
-                this.estimates = new int[r.EstimateGroups.Length];
 
                 var est = estString.Split(new string[] {" ", "\t"}, StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 0; i < r.EstimateGroups.Length; i++)
+
+                var len = r.EstimateGroups.Length;
+                if (len == 0 && Program.mainForm.WithoutPrioritiesBox.Checked)
+                {
+                    len = est.Length;
+                    r.EstimateGroups = new int[len];
+                    for (int i = 0; i < len; i++)
+                        r.EstimateGroups[i] = i;
+                }
+                this.estimates = new int[len];
+
+                for (int i = 0; i < len; i++)
                 {
                     this.estimates[i] = Int32.Parse(est[r.EstimateGroups[i]]);
                     if (isReversed)
@@ -368,7 +378,15 @@ namespace ContestPlacesWithoutPoints
         {
             var eg = lines[0].Trim().Split(new string[] { " ", "\t" }, StringSplitOptions.RemoveEmptyEntries);
             if (eg.Length < 1)
-                throw new Exception("Неверно заполнена первая строка: первая строка - приоритеты груп при оценке. Номера групп начинаются с нуля, левая группа самая сильная. Первая строка вообще не заполнена");
+            {
+                if (Program.mainForm.WithoutPrioritiesBox.Checked)
+                {
+                    r.EstimateGroups = new int[0];
+                    return;
+                }
+                else
+                    throw new Exception("Неверно заполнена первая строка: первая строка - приоритеты груп при оценке. Номера групп начинаются с нуля, левая группа самая сильная. Первая строка вообще не заполнена");
+            }
 
             r.EstimateGroups = new int[eg.Length];
             for (int i = 0; i < eg.Length; i++)
@@ -402,6 +420,11 @@ namespace ContestPlacesWithoutPoints
                 sb.AppendLine("Принцип подсчёта: чем больше параметр - тем лучше");
             else
                 sb.AppendLine("Принцип подсчёта: чем меньше параметр (чем выше место) - тем лучше");
+
+            if (WithoutPrioritiesBox.Checked)
+                sb.AppendLine("Все судьи равны");
+            else
+                sb.AppendLine("Приоритеты судей заданы");
 
             r.texts.Sort(r.texts[0]);
             for (int i = 0; i < r.texts.Count; i++)
