@@ -64,7 +64,7 @@ namespace ContestPlacesWithoutPoints
 
             public List<int> compared;
 
-            public TextClass(Result r, string Name, string estString, bool isReversed)
+            public TextClass(Result r, string Name, string estString, bool isReversed, bool WithoutPriorities = false)
             {
                 this.r    = r;
                 this.Name = Name;
@@ -77,6 +77,8 @@ namespace ContestPlacesWithoutPoints
                     if (isReversed)
                         this.estimates[i] *= -1;
                 }
+
+                this.WithoutPriorities = WithoutPriorities;
             }
 
             protected TextClass()
@@ -90,6 +92,7 @@ namespace ContestPlacesWithoutPoints
                 r.Name = this.Name;
                 r.clonedOldNumber = clonedOldNumber;
                 r.estimates = (int[]) this.estimates.Clone();
+                r.WithoutPriorities = this.WithoutPriorities;
 
                 return r;
             }
@@ -105,6 +108,9 @@ namespace ContestPlacesWithoutPoints
 
                 return result;
             }
+
+            /// <summary>Без приоритетов: все судьи (параметры) равны. Конкурсанты равны тогда, когда равно количество "за" и "против" них вне зависимости от их порядка.</summary>
+            public bool WithoutPriorities = false;
 
             // Если объект лучше по большему количеству признаков - то объект побеждает другой объект
             // Если возвращаемый результат меньше нуля - значит this хуже, чем other
@@ -126,6 +132,9 @@ namespace ContestPlacesWithoutPoints
                 else
                 if (cnt < 0)
                     return -1;
+
+                if (WithoutPriorities)
+                    return 0;
 
                 // Сравниваем по приоритетам групп
                 for (int i = 0; i < this.estimates.Length; i++)
@@ -349,7 +358,7 @@ namespace ContestPlacesWithoutPoints
                     continue;
 
                 
-                var txt = new TextClass(r, t, lines[i + 1].Trim(), isReversed);
+                var txt = new TextClass(r, t, lines[i + 1].Trim(), isReversed, Program.mainForm.WithoutPrioritiesBox.Checked);
                 r.texts.Add(txt);
                 i++;
             }
