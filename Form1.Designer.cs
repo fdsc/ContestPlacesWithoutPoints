@@ -39,7 +39,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1109, 29);
+            this.button1.Location = new System.Drawing.Point(0, 29);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -49,9 +49,9 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Location = new System.Drawing.Point(80, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1100, 20);
+            this.textBox1.Size = new System.Drawing.Size(1000, 20);
             this.textBox1.TabIndex = 3;
             // 
             // openFileDialog1
@@ -70,7 +70,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1109, 0);
+            this.button2.Location = new System.Drawing.Point(0, 0);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 5;
@@ -81,18 +81,18 @@
             // ReverseBox
             // 
             this.ReverseBox.AutoSize = true;
-            this.ReverseBox.Location = new System.Drawing.Point(976, 29);
+            this.ReverseBox.Location = new System.Drawing.Point(500, 29);
             this.ReverseBox.Name = "ReverseBox";
             this.ReverseBox.Size = new System.Drawing.Size(127, 17);
             this.ReverseBox.TabIndex = 7;
-            this.ReverseBox.Text = "Первые места хуже";
+            this.ReverseBox.Text = "Первые места хуже (баллы, а не места)";
             this.ReverseBox.UseVisualStyleBackColor = true;
             this.ReverseBox.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // WithoutPrioritiesBox
             // 
             this.WithoutPrioritiesBox.AutoSize = true;
-            this.WithoutPrioritiesBox.Location = new System.Drawing.Point(976, 52);
+            this.WithoutPrioritiesBox.Location = new System.Drawing.Point(500, 52);
             this.WithoutPrioritiesBox.Name = "WithoutPrioritiesBox";
             this.WithoutPrioritiesBox.Size = new System.Drawing.Size(206, 17);
             this.WithoutPrioritiesBox.TabIndex = 7;
