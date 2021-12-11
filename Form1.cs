@@ -293,26 +293,19 @@ namespace ContestPlacesWithoutPoints
                     // Если разрешить спор между конкурсантами не удалось
                     else
                     {/*
-// File.WriteAllText("/inRam/tmp.txt", "");
-                        int maxSumm = int.MinValue;
+                        // Ищем тех, у кого меньше всего произведений, которым они уступают
+                        int minSumm = int.MaxValue;
                         for (int i = 0; i < list.Count; i++)
                         {
-/*
-File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].summ = {txts[list[i]].summ}\r\n");
-File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].min = {txts[list[i]].min}\r\n");
-File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].max = {txts[list[i]].max}\r\n");
-for (int kd = 0; kd < txts[list[i]].compared.Count; kd++)
-File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].compared[{kd}] = {txts[list[i]].compared[kd]}\r\n");
-
-                            if (txts[list[i]].summ > maxSumm)
+                            if (txts[list[i]].min < minSumm)
                             {
-                                maxSumm = txts[list[i]].summ;
+                                minSumm = txts[list[i]].min;
                             }
                         }
 
                         for (int i = 0; i < list.Count; i++)
                         {
-                            if (txts[list[i]].summ >= maxSumm)
+                            if (txts[list[i]].min == minSumm)
                             {
                             }
                             else
