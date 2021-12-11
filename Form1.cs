@@ -232,32 +232,7 @@ namespace ContestPlacesWithoutPoints
                         cntI++;
                     }
                 }
-                /*
-                if (cntI > 1)
-                {
-                    int maxSumm = int.MinValue;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (txts[list[i]].summ > maxSumm)
-                        {
-                            maxSumm = txts[list[i]].summ;
-                        }
-                    }
 
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (txts[list[i]].summ >= maxSumm)
-                        {
-                        }
-                        else
-                        {
-                            list.RemoveAt(i);
-                            i--;
-                            cntI--;
-                        }
-                    }
-                }
-                else*/
                 // Если все уступают хоть кому-нибудь, то есть первое место не очевидно
                 // Ищем всех, у кого максимальное количество соревнователей, над которыми они круче
                 if (cntI <= 0)
@@ -299,6 +274,7 @@ namespace ContestPlacesWithoutPoints
                         newR.texts.Add((TextClass) txts[list[i]].Clone(newR, list[i]));
                     }
 
+                    // Если выделено меньше равных произведений, чем есть в исходном оцениваемом списке
                     if (r.texts.Count > list.Count)
                     {
                         calculate(newR);
@@ -313,6 +289,39 @@ namespace ContestPlacesWithoutPoints
 
                         list = list2;
                         list2 = null;
+                    }
+                    // Если разрешить спор между конкурсантами не удалось
+                    else
+                    {/*
+// File.WriteAllText("/inRam/tmp.txt", "");
+                        int maxSumm = int.MinValue;
+                        for (int i = 0; i < list.Count; i++)
+                        {
+/*
+File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].summ = {txts[list[i]].summ}\r\n");
+File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].min = {txts[list[i]].min}\r\n");
+File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].max = {txts[list[i]].max}\r\n");
+for (int kd = 0; kd < txts[list[i]].compared.Count; kd++)
+File.AppendAllText("/inRam/tmp.txt", $"txts[{list[i]}].compared[{kd}] = {txts[list[i]].compared[kd]}\r\n");
+
+                            if (txts[list[i]].summ > maxSumm)
+                            {
+                                maxSumm = txts[list[i]].summ;
+                            }
+                        }
+
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if (txts[list[i]].summ >= maxSumm)
+                            {
+                            }
+                            else
+                            {
+                                list.RemoveAt(i);
+                                i--;
+                                cntI--;
+                            }
+                        }*/
                     }
                 }
 
