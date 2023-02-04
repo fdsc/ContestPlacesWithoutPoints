@@ -271,7 +271,8 @@ namespace ContestPlacesWithoutPoints
 
                     for (int i = 0; i < list.Count; i++)
                     {
-                        newR.texts.Add((TextClass) txts[list[i]].Clone(newR, list[i]));
+                        var newAdd = (TextClass) txts[list[i]].Clone(newR, list[i]);
+                        newR.texts.Add(newAdd);
                     }
 
                     // Если выделено меньше равных произведений, чем есть в исходном оцениваемом списке
